@@ -26,14 +26,16 @@ In order to use the data we need to transform to the a standard size (224,224,3)
 We'll need to create a function to identify human faces, using the OpenCV.  For this we will also need to transform the images, since OpenCV identifies faces on a grey scale image.  This function will basically return a True/False depending on a face being present.
 
 ### 3.2.2. Identifying dog breeds
-The first attempt at actually training a network is to build a network from scratch, with a combination of dense and convolutional networks, which as demonstrated in the notebook, can take many epochs and processing time.  So we'll transfer knowledge from a pre-trained network to a new one and add a classifier at the end.
+#### 3.2.2.1. From sratch
+The first attempt at actually training a network is to build a network from scratch, with a combination of dense and convolutional networks, which as demonstrated in the notebook, can take many epochs and processing time.  As can be seen on the notebook, a 3.5% precision for a from-scratch network was obtained in 8 epochs.  This could be a long process to train a network from sratch
 
-In order to shorten the training period, and reuse already trained networks, we'll build a two step network, sort of pipeline.
+#### 3.2.2.2. From a pre-trained model
+So, we'll transfer knowledge from a pre-trained network to a new one and add a classifier at the end. In order to shorten the training period, and reuse already trained networks, we'll build a two step network, sort of pipeline.
 - __Extracting features__: We'll use the multiple alternatives available in the keras package to extract the features of the images
 - __Classifying features__:  Once a set of features are identified, we'll use another set of layers to correctly classify each of the breeds
 
 ## 3.3. Refinement
-The first refinement donde on the model was on the Classifying features section of the pipeline.  The first step of the network will always be the Global Average Pooling network, plus one or more Dense networks to generate the final classifier.   However, in the end, after multiple tests, we would tell that adding more than one layer of classifiers actually made accuracy worse than with a single layer, so I decided for a single Global Average Pooling layer, plus a Dense layer at the end.
+The first refinement done on the model was on the Classifying features section of the pipeline.  The first step of the network will always be the Global Average Pooling network, plus one or more Dense networks to generate the final classifier.   However, in the end, after multiple tests, we would tell that adding more than one layer of classifiers actually made accuracy worse than with a single layer, so I decided for a single Global Average Pooling layer, plus a Dense layer at the end.
 
 ## 3.4 Improvement
 In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 82% accuracy, but Xception was the highest in the end.

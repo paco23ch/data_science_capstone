@@ -1,5 +1,6 @@
 # Udacity Data Scientist Capstone Project
 > __Dog Breed Detection__
+
 > *Francisco Chavez Clemente*
 
 # Project Definition

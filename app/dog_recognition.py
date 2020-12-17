@@ -1,10 +1,11 @@
 import cv2     
 import numpy as np
 from keras.preprocessing import image                  
-from keras.applications.resnet50 import preprocess_input, decode_predictions, ResNet50
+#from keras.applications.resnet50 import preprocess_input, decode_predictions, ResNet50
+from keras.applications.xception import preprocess_input, decode_predictions, Xception
 from keras.layers import GlobalAveragePooling2D, Dense
 from keras.models import Sequential
-from extract_bottleneck_features import extract_Resnet50
+from extract_bottleneck_features import extract_Resnet50, extract_Xception
 from glob import glob
 
 class DogRecognizer:
@@ -26,7 +27,8 @@ class DogRecognizer:
 
         # Instantiate the model as a sequential keras model and add the layers
         self.my_model = Sequential()
-        self.my_model.add(GlobalAveragePooling2D(input_shape=(1, 1, 2048)))
+        # self.my_model.add(GlobalAveragePooling2D(input_shape=(1, 1, 2048))) # For ResNet50
+        self.my_model.add(GlobalAveragePooling2D(input_shape=(7, 7, 2048))) # For XCeption
         self.my_model.add(Dense(133, activation='softmax'))
 
         # Load the best model
@@ -88,7 +90,9 @@ class DogRecognizer:
         Highest probability prediction found
         """
 
-        bottleneck_feature = extract_Resnet50(self.path_to_tensor(img_path)) #.astype('float32')/255)
+        #bottleneck_feature = extract_Resnet50(self.path_to_tensor(img_path))
+        bottleneck_feature = extract_Xception(self.path_to_tensor(img_path))
+
         predicted_vector = self.my_model.predict(bottleneck_feature)
 
         return np.argmax(predicted_vector), predicted_vector[0,np.argmax(predicted_vector)]

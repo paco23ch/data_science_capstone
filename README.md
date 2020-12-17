@@ -61,7 +61,6 @@ There may be cases where because of overlapping features, the certainty of the p
 
 ## Directory Structure
 
-```markdown
 - __app__   Main app directory
   - __model__   Directory where the model and face features config file is stored
   - __static__  Directory for image upload and reference
@@ -81,4 +80,3 @@ There may be cases where because of overlapping features, the certainty of the p
 - dog_app.html      -> HTML output of the notebook used for training and exploring the different network architectures
 - dog_app.ipynb     -> Jupyter Notebook used for training and exploring the different network architectures
 - extract_bottleneck_features.py -> Contains the DogRecognition class which encapsulates the code for the predictive features in the backend
-```

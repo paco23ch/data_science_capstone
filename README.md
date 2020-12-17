@@ -61,6 +61,7 @@ There may be cases where because of overlapping features, the certainty of the p
 
 ## Directory Structure
 
+```
 __app__
   __model__
   __static__
@@ -81,3 +82,4 @@ README.md
 dog_app.html
 dog_app.ipynb
 extract_bottleneck_features.py
+```

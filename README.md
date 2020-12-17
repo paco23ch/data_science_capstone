@@ -78,4 +78,4 @@ There may be cases where because of overlapping features, the certainty of the p
 - `README.md`: This file
 - `dog_app.html`: HTML output of the notebook used for training and exploring the different network architectures
 - `dog_app.ipynb`: Jupyter Notebook used for training and exploring the different network architectures
-- `extract_bottleneck_features.py`: Contains the DogRecognition class which encapsulates the code for the predictive features in the backend
+- `extract_bottleneck_features.py`: Used to extract the correct features for the pre-trained network, contains each of the 5 used in this notebook

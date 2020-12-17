@@ -62,24 +62,23 @@ There may be cases where because of overlapping features, the certainty of the p
 ## Directory Structure
 
 ```markdown
-__app__
-  __model__
-  __static__
-    __reference_
-    __upload__
-  __templates__
-  dog_recognition.py
-  extract_bottleneck_features.py
-  run.py 
-__haarcascades__
-__images__
-__requirements__
-__saved_models__
-.gitignore
-CODEOWNERS
-LICENSE.txt
-README.md
-dog_app.html
-dog_app.ipynb
-extract_bottleneck_features.py
+__app__   Main app directory
+  __model__   Directory where the model and face features config file is stored
+  __static__  Directory for image upload and reference
+    __reference__ Contains directories for sample images for all dog breeds
+    __upload__    Where files posted to the app are stored
+  __templates__   This contains the HTML Jinja templates used
+    go.html       Will pocess the results from each of the evaluation requests
+    master.html   Main page that will prepare the input fields and submit buttons
+  dog_recognition.py              -> Contains the DogRecognition class which encapsulates the code for the predictive features in the backend
+  extract_bottleneck_features.py  -> Used to extract the correct features for the pre-trained network, contains each of the 5 used in this notebook
+  run.py                          -> Main application file
+__haarcascades__  Contains the face detection XML configuration file
+__images__        Sample images to test the application
+__requirements__  List of code pre-reqs.
+__saved_models__  Models produced while running the notebook.
+README.md         -> This file
+dog_app.html      -> HTML output of the notebook used for training and exploring the different network architectures
+dog_app.ipynb     -> Jupyter Notebook used for training and exploring the different network architectures
+extract_bottleneck_features.py -> Contains the DogRecognition class which encapsulates the code for the predictive features in the backend
 ```

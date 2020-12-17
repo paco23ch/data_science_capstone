@@ -61,7 +61,7 @@ There may be cases where because of overlapping features, the certainty of the p
 
 ## Directory Structure
 
-```
+```markdown
 __app__
   __model__
   __static__

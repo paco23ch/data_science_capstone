@@ -49,7 +49,7 @@ In order to look at different pre-trained networks, I ran 100 epochs for each of
 # 4. Deliverables
 ## 4.1. Notable exclusions
 In order to minimize the size of the repository I excluded the training, testing and validating images.  I did include a set of images (test) that will work with the application to show users similar dogs to the ones identified, specially in the case of people, so they try to find the similarl identified features.
-## 4.2. Application
+## 4.2. Repository contents
 The code contained here is split basically in a working notebook, in order to train the network and refine/improve the model, plus build the general algorithm, plus a web application.
 ## 4.3. Web application
 The web application is based on code from a previous Udacity project on Disaster message classification.  It's a Flask-based application that uses Jinja to generate HTML code via templates.   It has a very simple interface, that will allow you to select a file using a file chooser and once you submit your uploaded image, it will give you the dog breed prediction along with sample images to help identify races.  
@@ -58,7 +58,7 @@ In order to run locally, you just need to type `python run.py` in the app direct
 
 There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
 
-## Directory Structure
+## 4.4. Directory Structure
 
 - __app__: Main app directory
   - __model__: Directory where the model and face features config file is stored

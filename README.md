@@ -36,7 +36,7 @@ In order to shorten the training period, and reuse already trained networks, we'
 The first refinement donde on the model was on the Classifying features section of the pipeline.  The first step of the network will always be the Global Average Pooling network, plus one or more Dense networks to generate the final classifier.   However, in the end, after multiple tests, we would tell that adding more than one layer of classifiers actually made accuracy worse than with a single layer, so I decided for a single Global Average Pooling layer, plus a Dense layer at the end.
 
 ## Improvement
-In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best two were the ResNet50 and the Xception networks, so I decided to use the Xception network as the pretrained network to get the highest possible accuracy.
+In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 82% accuracy, but Xception was the highest in the end.
 
 | Model | Test accuracy |
 | :-- | :--: |
@@ -48,9 +48,14 @@ In order to look at different pre-trained networks, I ran 100 epochs for each of
 
 # Deliverables
 ## Notable exclusions
-In order to minimize the 
+In order to minimize the size of the repository I excluded the training, testing and validating images.  I did include a set of images (test) that will work with the application to show users similar dogs to the ones identified, specially in the case of people, so they try to find the similarl identified features.
 ## Application
+The code contained here is split basically in a working notebook, in order to train the network and refine/improve the model, plus build the general algorithm, plus a web application.
 ## Web application
+The web application is based on code from a previous Udacity project on Disaster message classification.  It's a Flask-based application that uses Jinja to generate HTML code via templates.   It has a very simple interface, that will allow you to select a file using a file chooser and once you submit your uploaded image, it will give you the dog breed prediction along with sample images to help identify races.  
 
+In order to run locally, you just need to type `python run.py` in the app directory, and the app will load an http server, accesible on `http://localhost:3001`.   
+
+There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
 
 ## Directory Structure

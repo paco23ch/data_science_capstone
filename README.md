@@ -1,10 +1,10 @@
 # Udacity Data Scientist Capstone Project
-## Dog Breed Detection
-> Francisco Chavez Clemente
+> __Dog Breed Detection__
+> *Francisco Chavez Clemente*
 
 # Project Definition
 ## Project Overview
-One of the most popular pets in the world are dogs.  There are a large number of breeds and for all likings, and for someone who is not familiar with all breeds it may be difficult to identify the correct one for any given dog.  At the same time
+One of the most popular pets in the world are dogs.  There are a large number of breeds and for all likings, and for someone who is not familiar with all breeds it may be difficult to identify the correct one for any given dog.  At the same time, it could be a fun app to receive images of people and trying to tell them which dog breed they may look like given the identified features in the image.
 
 ## Problem Statement
 We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least

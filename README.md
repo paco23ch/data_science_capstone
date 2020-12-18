@@ -17,7 +17,7 @@ We need to be able to take an input image and using a model identify the race wi
 
 # 2. Analysis
 ## 2.1. Data Exploration & Visualization
-In order for the algorithms to work, we will need to pre-process the input images to the right size..
+In order for the algorithms to work, we will need to pre-process the input images to the right size.
 
 # 3. Methodology
 ## 3.1. Data Preprocessing
@@ -40,6 +40,8 @@ So, we'll transfer knowledge from a pre-trained network to a new one and add a c
 
 ## 3.3. Refinement
 The first refinement done on the model was on the Classifying features section of the pipeline.  The first step of the network will always be the Global Average Pooling network, plus one or more Dense networks to generate the final classifier.   However, in the end, after multiple tests, we would tell that adding more than one layer of classifiers actually made accuracy worse than with a single layer, so I decided for a single Global Average Pooling layer, plus a Dense layer at the end.
+
+Another moving part in the pipeline is the feature identification first stage, using multiple options in the `keras` package: `ResNet50`, `VGG16`, `VGG19`, `Inception`, `Xception`.  Fortunately for us, on the training stage, the feature extraction for training from those models was given to us, so all we needed to do in the actual application is to load the `keras` library.
 # 4. Results
 ## 4.1. Model Evaluation and Validation
 In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 82% accuracy, but Xception was the highest in the end.

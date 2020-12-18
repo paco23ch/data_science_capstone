@@ -42,6 +42,7 @@ We have two sets of data files: faces and dogs.
 - Dogs: There are three data sets: train, test and validation.   Each of these directories contain 133 directories with images representing each of the breeds that we're trying to identify.   
   - The directories are named as 999.Dob_breed_name, where 999 goes from 001 to 133.  From the directory names, we should be able to obtain the image labels and names, for example, directory `001.Affenpinscher` will be label 1, and the breed name is __Affenpinscher__.  We should be able to use each of the images sorting these directories and knowing from it the correct target label.
   - As for the images, by exploring them, we can see that there are all sorts of resolution, which could be an issue if we use them as-is to train our network.  We will most likely have to resize them to a standard window in order to detect features.
+  - In some cases, the images do contain people with the dogs, which will possibly lead to us detecting human faces and mistakenly saying there's a person in the picture.
 
 In order for the algorithms to work, we will need to pre-process the input images to the right size.
 ## 2.2. Visualization
@@ -57,7 +58,6 @@ What could also constitute a type of metric/visualization are the basic stats ab
   - There are 835 validation dog images.
   - There are 836 test dog images.
 
-
 # 3. Methodology
 ## 3.1. Data Preprocessing
 In order to use the data, we will need to do a couple of steps for the training stages of the breed recognition algorithms, given that each of the functions require specific structures.
@@ -65,9 +65,18 @@ In order to use the data, we will need to do a couple of steps for the training 
   - Vectorizing: The algorithms will need to use tensors to pass the images through them, so we will also convert the resized image to a vector, using the image libraries from keras.preprocessing.
 
 ## 3.2. Implementation
-### 3.2.1. Identifying a user
-We'll need to create a function to identify human faces, using the OpenCV.  For this we will also need to transform the images, since OpenCV identifies faces on a grey scale image.  This function will basically return a True/False depending on a face being present.  One of the main limitations of the OpenCV algorithms is that faces need to be frontal, this could be resolved by training a CNN with faces in different orientations, but given the time, this was not possible.
+### 3.2.1. Face detection
+We created a function to identify human faces, using the OpenCV.  For this we also need to transform the images, since OpenCV identifies faces on a grey scale image.  This function basically returns a True/False depending on a face being present.  One of the main limitations of the OpenCV algorithms is that faces need to be frontal, this could be resolved by training a CNN with faces in different orientations, but given the time, this was not possible.
 
+As mentioned before, this function was to be tested against both dog and human images to determine the performance, and this is how the function works:
+- Faces detected 100/100 - this is an accuracy of 100% in face detection.
+- Dogs detected 11/100 - this is an accuracy of 11% in dog detection.  The desired output here was to get a 0%, becasue none of these images are dogs, but when exploring the images we noticed that some images do contain humans in them, so that could be the reason for some of these 11% detected human faces.
+### 3.2.2. Dog detection
+We created a function to identify dogs in an image, based on the ResNet50 library, which has been trained to identify all sorts of images from a long library.  When using ResNet50, we need to consider a given range for dogs to be detected.  So if a label from ResNet50 is between 151 and 268, it means there's a dog in the image.
+
+Again, we ran both the human and dog images through the algorithm to determine how accurate the dog detector is and these are the results:
+- Faces detected 0/100, which is what was expected, no dogs in human pictures.
+- Dog faces detected 100/100, which is a great result, because we know all dog images received actually have a dog, even though they may also contain a human in them in some cases.
 ### 3.2.2. Identifying dog breeds
 #### 3.2.2.1. From sratch
 The first attempt at actually training a network is to build a network from scratch, with a combination of dense and convolutional networks, which as demonstrated in the notebook, can take many epochs and processing time.  As can be seen on the notebook, a 3.5% precision for a from-scratch network was obtained in 8 epochs.  

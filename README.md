@@ -45,12 +45,24 @@ We have two sets of data files: faces and dogs.
 
 In order for the algorithms to work, we will need to pre-process the input images to the right size.
 ## 2.2. Visualization
-It's hard to find a set of visualizations for the input data, being a set of images, but as can be seen in the notebook, the OpenCV library is able to correctly identify the faces of an image, such as:
+It's hard to find a set of visualizations for the input data, being a set of images, but as can be seen in the notebook, the OpenCV library is able to correctly identify the faces of an image, such as images show in each of the steps.
+
+What could also constitute a type of metric/visualization are the basic stats about the data set:
+- Faces
+  - There are 13233 total human images.
+- Dogs
+  - There are 133 total dog categories.
+  - There are 8351 total dog images.
+  - There are 6680 training dog images.
+  - There are 835 validation dog images.
+  - There are 836 test dog images.
 
 
 # 3. Methodology
 ## 3.1. Data Preprocessing
-In order to use the data we need to transform to the a standard size (224,224,3), because they all are color images.  Plus, the algorithms will need to use tensors to pass the images through them.
+In order to use the data, we will need to do a couple of steps for the training stages of the breed recognition algorithms, given that each of the functions require specific structures.
+  - Re-sizing: In order to use the dog data we need to transform to the a standard size (224,224,3), because they all are color images, so this means the image size is 224x224, and there are 3 channels of data (RGB).  
+  - Vectorizing: The algorithms will need to use tensors to pass the images through them, so we will also convert the resized image to a vector, using the image libraries from keras.preprocessing.
 
 ## 3.2. Implementation
 ### 3.2.1. Identifying a user

@@ -55,8 +55,8 @@ In order to look at different pre-trained networks, I ran 100 epochs for each of
 Given that we're looking for the highest accuracy possible, and the algorithm has been validated on each epoch for the loss, and also has been tested for accuracy with the test data set and we've obtained close to 85% it looks like the right model to use.
 # 5. Conclusion
 # 5.1. Reflection
-With CNNs, we can very nicely simplify the input images to smaller vectors, which in turn can be simplified further to come to a more simple set of features, for a later 
-# 5.2 Improvement
+With CNNs, we can very nicely simplify the input images to smaller vectors, which in turn can be simplified further to come to a more simple set of features, for a later classificator implementation.   This approach saves lots of time on training, specially when those have been trained with lots of images to identify features, which are helpful to focus on the classification stage.
+# 5.2. Improvement
 In general the model was able to produce the right results, however, there are a few things could be done to improve the precision.
 - We could add image shifting and rotating to the existing images to have more variability of features.
 - We could also add more images to the training set to add the samples, and also use Dropout layers.
@@ -74,7 +74,7 @@ In order to run locally, you just need to type `python run.py` in the app direct
 
 There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
 
-## 6.3.1. Directory Structure
+### 6.3.1. Directory Structure
 
 - __app__: Main app directory
   - __model__: Directory where the model and face features config file is stored

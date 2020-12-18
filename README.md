@@ -6,6 +6,8 @@ __Dog Breed Detection__
 ## 1.1. Project Overview
 One of the most popular pets in the world are dogs.  There are a large number of breeds and for all likings, and for someone who is not familiar with all breeds it may be difficult to identify the correct one for any given dog.  At the same time, it could be a fun app to receive images of people and trying to tell them which dog breed they may look like given the identified features in the image.
 
+The input data for this project are images of different sizes.  We have dog images and people images.  The dog images are split in three sets train, validation and testing. 
+
 ## 1.2. Problem Statement
 We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least
 
@@ -15,7 +17,7 @@ We need to be able to take an input image and using a model identify the race wi
 
 # 2. Analysis
 ## 2.1. Data Exploration & Visualization
-The input data for this project are images of different sizes.  We have dog images and people images.  The dog images are split in three sets train, validation and testing.  In order for the algorithms to work, we will need to pre-process these images.
+In order for the algorithms to work, we will need to pre-process the input images to the right size..
 
 # 3. Methodology
 ## 3.1. Data Preprocessing
@@ -23,7 +25,7 @@ In order to use the data we need to transform to the a standard size (224,224,3)
 
 ## 3.2. Implementation
 ### 3.2.1. Identifying a user
-We'll need to create a function to identify human faces, using the OpenCV.  For this we will also need to transform the images, since OpenCV identifies faces on a grey scale image.  This function will basically return a True/False depending on a face being present.
+We'll need to create a function to identify human faces, using the OpenCV.  For this we will also need to transform the images, since OpenCV identifies faces on a grey scale image.  This function will basically return a True/False depending on a face being present.  One of the main limitations of the OpenCV algorithms is that faces need to be frontal, this could be resolved by training a CNN with faces in different orientations, but given the time, this was not possible.
 
 ### 3.2.2. Identifying dog breeds
 #### 3.2.2.1. From sratch
@@ -38,8 +40,8 @@ So, we'll transfer knowledge from a pre-trained network to a new one and add a c
 
 ## 3.3. Refinement
 The first refinement done on the model was on the Classifying features section of the pipeline.  The first step of the network will always be the Global Average Pooling network, plus one or more Dense networks to generate the final classifier.   However, in the end, after multiple tests, we would tell that adding more than one layer of classifiers actually made accuracy worse than with a single layer, so I decided for a single Global Average Pooling layer, plus a Dense layer at the end.
-
-## 3.4 Improvement
+# 4. Results
+## 4.1. Model Evaluation and Validation
 In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 82% accuracy, but Xception was the highest in the end.
 
 | Model | Test accuracy |
@@ -49,20 +51,30 @@ In order to look at different pre-trained networks, I ran 100 epochs for each of
 | DogVGG19Data | 49.1627% |
 | DogInceptionV3Data | 79.0670% | 
 | DogXceptionData | 84.6890% |
-
-# 4. Deliverables
-## 4.1. Notable exclusions
+## 4.2. Justification
+Given that we're looking for the highest accuracy possible, and the algorithm has been validated on each epoch for the loss, and also has been tested for accuracy with the test data set and we've obtained close to 85% it looks like the right model to use.
+# 5. Conclusion
+# 5.1. Reflection
+With CNNs, we can very nicely simplify the input images to smaller vectors, which in turn can be simplified further to come to a more simple set of features, for a later 
+# 5.2 Improvement
+In general the model was able to produce the right results, however, there are a few things could be done to improve the precision.
+- We could add image shifting and rotating to the existing images to have more variability of features.
+- We could also add more images to the training set to add the samples, and also use Dropout layers.
+- We could try other available pre-trained networks.
+- Using existing trained networks will save time, but we could also propose a new architecture end-to-end and train for a few more epochs. This would take more time and resources as shown in one of the earlier sections.
+# 6. Deliverables
+## 6.1. Notable exclusions
 In order to minimize the size of the repository I excluded the training, testing and validating images.  I did include a set of images (test) that will work with the application to show users similar dogs to the ones identified, specially in the case of people, so they try to find the similarl identified features.
-## 4.2. Repository contents
+## 6.2. Repository contents
 The code contained here is split basically in a working notebook, in order to train the network and refine/improve the model, plus build the general algorithm, plus a web application.
-## 4.3. Web application
+## 6.3. Web application
 The web application is based on code from a previous Udacity project on Disaster message classification.  It's a Flask-based application that uses Jinja to generate HTML code via templates.   It has a very simple interface, that will allow you to select a file using a file chooser and once you submit your uploaded image, it will give you the dog breed prediction along with sample images to help identify races.  
 
 In order to run locally, you just need to type `python run.py` in the app directory, and the app will load an http server, accesible on `http://localhost:3001`.   
 
 There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
 
-## 4.4. Directory Structure
+## 6.3.1. Directory Structure
 
 - __app__: Main app directory
   - __model__: Directory where the model and face features config file is stored

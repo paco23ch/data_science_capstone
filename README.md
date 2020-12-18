@@ -12,21 +12,34 @@ The input data for this project are images of different sizes.  We have dog imag
 We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least.   The application should be able to tell if there is a person in the picture and let them know the similarity to a given dog breed and the potencial feature overlaps.   If it's a dog, it should tell the user the breed and the certainty with which the model was able to predict.
 
 In order to fulfill the above, we needed to build:
-- A component that can detect faces in an image, for which we used the OpenCV library
-- A component that can quickly tell if there's a dog in the image, for which we used one of the keras libraries, such as ResNet50, that has been train in identifying a number of different images
-- A component that can determine which specific breed a dog is, based on the input images for each of the 133 breeds.  For this component, we used one of the pretrained networks and add a classifier for the specific number of breeds we want.  This will allow us to save time in training and also to train based on our own images.  This component will require a number of epochs and tuning in order to make it have accuracy above 60% as required.
-- A component that can interact with the user to receive an image and return a result.  For this, we built a Flask application that can receive files via a web page and use the models developed above to predict the image contents.
+- Human detector: A component that can detect faces in an image, for which we used the OpenCV library
+- Dog detector: A component that can quickly tell if there's a dog in the image, for which we used one of the keras libraries, such as ResNet50, that has been train in identifying a number of different images
+- Dog classifier: A component that can determine which specific breed a dog is, based on the input images for each of the 133 breeds.  For this component, we used one of the pretrained networks and add a classifier for the specific number of breeds we want.  This will allow us to save time in training and also to train based on our own images.  This component will require a number of epochs and tuning in order to make it have accuracy above 60% as required.
+- Application: A component that can interact with the user to receive an image and return a result.  For this, we built a Flask application that can receive files via a web page and use the models developed above to predict the image contents.
 
 ## 1.3. Metrics
-- 
-  - We use the loss as a measure of how much the model in a given iteration gets closer to the actual values
-  - We will use accuracy as the reference metric.  We will use the predictions vs. the actual labels on the train, test and validation sets to determine the effectiveness of the algorithm.
-  - To do an early stop we will measure the loss change from iteration to iteration when running the model against the validation data set.  
-- For the testing process
+- Human detector. Since the main purpose of this component is to know if the image contains a human face, we will use:
+  - Accuracy = Number of correct images / Total images
+  - We will apply this metric to both the dog and human training sets in order to determine their precision.
+- Dog detector. Since the main purpose of this component is to know if the image contains a dog, we will use:
+  - Accuracy = Number of correct images / Total images
+  - We will apply this metric to both the dog and human training sets in order to determine their precision.
+- Dog classifier. This will require a couple of metrics used in the training process, as well as one in the test process:  
+  - Training:
+    - Loss = sum(Correct value - Predicted value)/Total values 
+    - Accuracy = Number of correctly predicted images / Total Images 
+    - We will use both metrics during training process on the train & validation sets to:
+      - Adjust the network parameters
+      - Determine when the model has improved or not
+  - Testing
+    - Accuracy = Number of correctly predicted images / Total Images 
+    - We will use the predictions vs. the actual labels on the test set to determine the effectiveness of the algorithm once it has been trained.
 
 # 2. Analysis
-## 2.1. Data Exploration & Visualization
+## 2.1. Data Exploration 
 In order for the algorithms to work, we will need to pre-process the input images to the right size.
+## 2.2. Visualization
+as
 
 # 3. Methodology
 ## 3.1. Data Preprocessing

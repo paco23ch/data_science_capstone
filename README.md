@@ -9,7 +9,7 @@ One of the most popular pets in the world are dogs.  There are a large number of
 The input data for this project are images of different sizes.  We have dog images and people images.  The dog images are split in three sets train, validation and testing. 
 
 ## 1.2. Problem Statement
-We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least
+We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least.   The application should be able to tell if there is a person in the picture and let them know the similarity to a given dog breed and the potencial feature overlaps.   If it's a dog, it should tell the user the breed and the certainty with which the model was able to predict.
 
 ## 1.3. Metrics
 - We will use accuracy as the reference metric.  We will use the predictions vs. the actual labels on the train, test and validation sets to determine the effectiveness of the algorithm.

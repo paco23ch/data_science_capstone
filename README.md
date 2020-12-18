@@ -37,9 +37,16 @@ In order to fulfill the above, we needed to build:
 
 # 2. Analysis
 ## 2.1. Data Exploration 
+We have two sets of data files: faces and dogs.
+- Faces: This is a sample directory, which contains a directory per person, and each directory contains one or more images to be used as reference for the face detector component.
+- Dogs: There are three data sets: train, test and validation.   Each of these directories contain 133 directories with images representing each of the breeds that we're trying to identify.   
+  - The directories are named as 999.Dob_breed_name, where 999 goes from 001 to 133.  From the directory names, we should be able to obtain the image labels and names, for example, directory `001.Affenpinscher` will be label 1, and the breed name is __Affenpinscher__.  We should be able to use each of the images sorting these directories and knowing from it the correct target label.
+  - As for the images, by exploring them, we can see that there are all sorts of resolution, which could be an issue if we use them as-is to train our network.  We will most likely have to resize them to a standard window in order to detect features.
+
 In order for the algorithms to work, we will need to pre-process the input images to the right size.
 ## 2.2. Visualization
-as
+It's hard to find a set of visualizations for the input data, being a set of images, but as can be seen in the notebook, the OpenCV library is able to correctly identify the faces of an image, such as:
+
 
 # 3. Methodology
 ## 3.1. Data Preprocessing

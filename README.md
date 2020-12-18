@@ -27,7 +27,9 @@ We'll need to create a function to identify human faces, using the OpenCV.  For 
 
 ### 3.2.2. Identifying dog breeds
 #### 3.2.2.1. From sratch
-The first attempt at actually training a network is to build a network from scratch, with a combination of dense and convolutional networks, which as demonstrated in the notebook, can take many epochs and processing time.  As can be seen on the notebook, a 3.5% precision for a from-scratch network was obtained in 8 epochs.  This could be a long process to train a network from sratch
+The first attempt at actually training a network is to build a network from scratch, with a combination of dense and convolutional networks, which as demonstrated in the notebook, can take many epochs and processing time.  As can be seen on the notebook, a 3.5% precision for a from-scratch network was obtained in 8 epochs.  
+
+This could be a long process to train a network from sratch, as can be seen, we could only obtain a 10.28% accuracy on the test set after 100 epochs lasting 35 minutes.
 
 #### 3.2.2.2. From a pre-trained model
 So, we'll transfer knowledge from a pre-trained network to a new one and add a classifier at the end. In order to shorten the training period, and reuse already trained networks, we'll build a two step network, sort of pipeline.

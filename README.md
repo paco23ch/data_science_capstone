@@ -11,9 +11,18 @@ The input data for this project are images of different sizes.  We have dog imag
 ## 1.2. Problem Statement
 We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least.   The application should be able to tell if there is a person in the picture and let them know the similarity to a given dog breed and the potencial feature overlaps.   If it's a dog, it should tell the user the breed and the certainty with which the model was able to predict.
 
+In order to fulfill the above, we needed to build:
+- A component that can detect faces in an image, for which we used the OpenCV library
+- A component that can quickly tell if there's a dog in the image, for which we used one of the keras libraries, such as ResNet50, that has been train in identifying a number of different images
+- A component that can determine which specific breed a dog is, based on the input images for each of the 133 breeds.  For this component, we used one of the pretrained networks and add a classifier for the specific number of breeds we want.  This will allow us to save time in training and also to train based on our own images.  This component will require a number of epochs and tuning in order to make it have accuracy above 60% as required.
+- A component that can interact with the user to receive an image and return a result.  For this, we built a Flask application that can receive files via a web page and use the models developed above to predict the image contents.
+
 ## 1.3. Metrics
-- We will use accuracy as the reference metric.  We will use the predictions vs. the actual labels on the train, test and validation sets to determine the effectiveness of the algorithm.
-- To do an early stop we will measure the loss change from iteration to iteration when running the model against the validation data set.  As optimizer we'll use  `rmsprop` and for loss we'll use `categorical_crossentropy`
+- 
+  - We use the loss as a measure of how much the model in a given iteration gets closer to the actual values
+  - We will use accuracy as the reference metric.  We will use the predictions vs. the actual labels on the train, test and validation sets to determine the effectiveness of the algorithm.
+  - To do an early stop we will measure the loss change from iteration to iteration when running the model against the validation data set.  
+- For the testing process
 
 # 2. Analysis
 ## 2.1. Data Exploration & Visualization

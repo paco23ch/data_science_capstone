@@ -1,0 +1,19 @@
+{% extends "master.html" %}
+{% block title %}Results{% endblock %}
+
+{% block message %}
+    <hr />
+    <h1 class="text-center">Error</h4>
+    <p class="text-center"><i>
+    <h4 class="text-center">Thank you for using this app </h4>
+    <p class="text-center">We noticed that you uploaded that doesn't contain a person or a dog, please submit a new image for analysis</p>
+    </i></p>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2 class="text-center">Uploaded image</h2>
+        <ul class="list-group text-center">
+            <img src="{{received_file}}">
+    </div>
+{% endblock %}

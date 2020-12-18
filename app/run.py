@@ -77,18 +77,24 @@ def go():
 
     # Once the file has been uploaded and saved in the path, we call the predict engine and get in return the breed, certainty, if it was a human 
     # and a list of sample images
-    breed, certainty, human, sample_images = recognizer.predict_breed(os.path.join(app.config['UPLOAD_PATH'], filename))
+    breed, certainty, human, dog, sample_images = recognizer.predict_breed(os.path.join(app.config['UPLOAD_PATH'], filename))
 
     # This will render the go.html, and are passing the prediction values, query and received file for rendering
-    return render_template(
-        'go.html',
-        query=query,
-        breed=breed,
-        certainty=certainty,
-        human=human,
-        received_file=os.path.join(app.config['UPLOAD_PATH'], filename),
-        sample_images=sample_images[0]
-    )
+    if not dog and not human:
+        return render_template(
+            'error.html',
+            received_file=os.path.join(app.config['UPLOAD_PATH'], filename)
+        )
+    else:
+        return render_template(
+            'go.html',
+            query=query,
+            breed=breed,
+            certainty=certainty,
+            human=human,
+            received_file=os.path.join(app.config['UPLOAD_PATH'], filename),
+            sample_images=sample_images[0]
+        )
 
 def main():
     """

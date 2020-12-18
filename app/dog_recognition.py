@@ -2,7 +2,11 @@ import cv2
 import numpy as np
 from keras.preprocessing import image                  
 #from keras.applications.resnet50 import preprocess_input, decode_predictions, ResNet50
-from keras.applications.xception import preprocess_input, decode_predictions, Xception
+#from keras.applications.xception import preprocess_input, decode_predictions, Xception
+#from keras.applications.resnet50 import preprocess_input, decode_predictions, ResNet50
+
+from keras.applications import xception, resnet50
+
 from keras.layers import GlobalAveragePooling2D, Dense
 from keras.models import Sequential
 from extract_bottleneck_features import extract_Resnet50, extract_Xception
@@ -34,6 +38,9 @@ class DogRecognizer:
         # Load the best model
         self.my_model.load_weights('model/weights.best.mymodel.hdf5')
 
+        # define ResNet50 model
+        self.ResNet50_model = resnet50.ResNet50(weights='imagenet')
+
         # extract pre-trained face detector
         self.face_cascade = cv2.CascadeClassifier('model/haarcascade_frontalface_alt.xml')
 
@@ -42,23 +49,6 @@ class DogRecognizer:
         self.dog_directories = [item[:] for item in sorted(glob("static/reference/*/"))]
 
         return
-
-    # returns "True" if face is detected in image stored at img_path
-    def face_detector(self, img_path):
-        """
-        Function to detect if there's a face in the image
-
-        Args:
-        Path of the image where we want to detect the faces
-
-        Returns:
-        True/False if there's a face or not
-        """
-
-        img = cv2.imread(img_path)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        faces = self.face_cascade.detectMultiScale(gray)
-        return len(faces) > 0
 
     def path_to_tensor(self, img_path):
         """
@@ -77,6 +67,33 @@ class DogRecognizer:
         x = image.img_to_array(img)
         # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
         return np.expand_dims(x, axis=0)
+
+    def ResNet50_predict_labels(self, img_path):
+        # returns prediction vector for image located at img_path
+        img = resnet50.preprocess_input(self.path_to_tensor(img_path))
+        return np.argmax(self.ResNet50_model.predict(img))
+
+    ### returns "True" if a dog is detected in the image stored at img_path
+    def dog_detector(self, img_path):
+        prediction = self.ResNet50_predict_labels(img_path)
+        return ((prediction <= 268) & (prediction >= 151)) 
+
+    # returns "True" if face is detected in image stored at img_path
+    def face_detector(self, img_path):
+        """
+        Function to detect if there's a face in the image
+
+        Args:
+        Path of the image where we want to detect the faces
+
+        Returns:
+        True/False if there's a face or not
+        """
+
+        img = cv2.imread(img_path)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = self.face_cascade.detectMultiScale(gray)
+        return len(faces) > 0
 
     def mymodel_predict_breed(self, img_path):
         """
@@ -114,10 +131,14 @@ class DogRecognizer:
         is_human = False
         if self.face_detector(img_path):
             is_human = True
+
+        is_dog = False
+        if self.dog_detector(img_path):
+            is_dog=True
                 
         # Call the prediction function and find the name and sample images to return
         pred_index, pred_prob = self.mymodel_predict_breed(img_path)
         pred_name = self.dog_names[pred_index].replace('_',' ').title()
         sample_images = [sorted(glob(self.dog_directories[pred_index] + "*"))]
         
-        return (pred_name, pred_prob, is_human, sample_images)
+        return (pred_name, pred_prob, is_human, is_dog, sample_images)

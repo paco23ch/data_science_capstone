@@ -151,6 +151,16 @@ The other part in the pipeline is the feature identification first stage, using 
 ## 4.1. Model Evaluation and Validation
 In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 82% accuracy, but Xception was the highest in the end.
 
+In this case, the model was trained on the train set, validated through the epochs against validation set and tested against the test set in one shot at the end.  Only dog data was used to test the model.  
+
+In order to compare models through the same parameters, I decided to keep the epochs at 100, but based on the Loss ans accuracy graph for the Xception network, we can see that training our Classifier is really fast, we really only need a few (<5) epochs for these networks to train:
+
+| Loss | Accuracy |
+| :-- | :--: |
+| !()[Loss.png] | !()[Accuracy.png] |
+
+The final accuracy against the test data can be seen here:
+
 | Model | Test accuracy |
 | :-- | :--: |
 | ResNet50 | 78.3493% |

@@ -186,10 +186,6 @@ In general the model was able to produce the right results, however, there are a
 In order to minimize the size of the repository I excluded the training, testing and validating images.  I did include a set of images (test) that will work with the application to show users similar dogs to the ones identified, specially in the case of people, so they try to find the similarl identified features.
 ## 6.2. Repository contents
 The code contained here is split basically in a working notebook, in order to train the network and refine/improve the model, plus build the general algorithm, plus a web application.
-## 6.3. Web application
-In order to run locally, you just need to type `python run.py` in the app directory, and the app will load an http server, accesible on `http://localhost:3001`.   
-There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
-## 6.4. Directory Structure
 - __app__: Main app directory
   - __model__: Directory where the model and face features config file is stored
   - __static__: Directory for image upload and reference
@@ -209,3 +205,7 @@ There may be cases where because of overlapping features, the certainty of the p
 - `dog_app.html`: HTML output of the notebook used for training and exploring the different network architectures
 - `dog_app.ipynb`: Jupyter Notebook used for training and exploring the different network architectures
 - `extract_bottleneck_features.py`: Used to extract the correct features for the pre-trained network, contains each of the 5 used in this notebook
+## 6.3. Web application
+In order to run locally, you just need to type `python run.py` in the app directory, and the app will load an http server, accesible on `http://localhost:3001`.   
+There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
+

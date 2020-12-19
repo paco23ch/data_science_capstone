@@ -46,9 +46,13 @@ We have two sets of data files: faces and dogs.
 
 In order for the algorithms to work, we will need to pre-process the input images to the right size.
 ## 2.2. Visualization
-It's hard to find a set of visualizations for the input data, being a set of images, but as can be seen in the notebook, the OpenCV library is able to correctly identify the faces of an image, such as images show in each of the steps.
+As can be seen in the notebook, the OpenCV library is able to correctly identify the faces of an image, such as images show in each of the steps.
 
-What could also constitute a type of metric/visualization are the basic stats about the data set:
+Another interesting thing to look at is the input image size to determine what needs to be done with them.  As we can see we have lots of differeng image sizes all the way to 4k square pixels, so we will need to scale them to be able to use them:
+
+![](Image_size.png)
+
+Sone basic stats about the data set:
 - Faces
   - There are 13233 total human images.
 - Dogs

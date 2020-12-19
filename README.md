@@ -67,7 +67,7 @@ In order to use the data, we will need to do a couple of steps for the training 
 
 ## 3.2. Implementation
 ### 3.2.1. Face detection
-This function was created to human faces, using the OpenCV.  For this we also need to transform the images, since OpenCV identifies faces on a grey scale image.  This function basically returns a True/False depending on a face being present.  One of the main limitations of the OpenCV algorithms is that faces need to be frontal, this could be resolved by training a CNN with faces in different orientations, but given the time, this was not possible.
+This function was created to human faces, using the OpenCV.  For this we also need to transform the images, since OpenCV identifies faces on a grey scale image. This function basically returns a True/False depending on a face being present.  One of the main limitations of the OpenCV algorithms is that faces need to be frontal, this could be resolved by training a CNN with faces in different orientations, but given the time, this was not possible.
 
 As mentioned before, this function was to be tested against both dog and human images to determine the performance, and this is how the function works:
 - Faces detected 100/100 - this is an accuracy of 100% in face detection.
@@ -116,6 +116,7 @@ Instead of using a network from scratch, we will transfer learning from a pre-tr
 - __Extracting features__: We'll use the multiple alternatives available in the keras package to extract the features of the images
 - __Classifying features__:  Once a set of features are identified, we'll use another set of layers to correctly classify each of the breeds
 Also, to save time, we were given a series for NPZ files which contain the feature extraction for the train, test and validation sets for each of the keras pre-trained networks.  
+
 Each of these networks have a different output, in some cases it's a vector of (1,1,2048) dimensions and in others (7,7,2048), so for tuning purposes we used the shape of the vectors given to save time, but in the end, the selected pre-trained network output shape had to be checked and explicitly typed into the code for it to work.
 
 Given that we want to reduce the dimensionality of the pre-trained network further, the selected architecture for the feature classifier is as follows.  This network contains a Global Pooling average layer and then a Dense Layer with 133 outputs, one for each breed.
@@ -132,11 +133,14 @@ Trainable params: 272,517
 Non-trainable params: 0
 _________________________________________________________________
 ```
-#### 3.2.4.  Web application
+### 3.2.4.  Web application
 The web application is based on code from a previous Udacity project on Disaster message classification.  It's a Flask-based application that uses Jinja to generate HTML code via templates.   
+
 The code is split in 3 main python files and 3 html files.   The main python file `run.py` contains the Flask skeleton and creates a `/` and `index` path to handle the first time a uses logs into the web page by loading the `master.html` template.  The `run.py`file instantiates a class contained in the `dog_recognition.py` file, that pre-loads the best model and weights obtained in the training process.
+
 The app has a very simple interface, that will allow you to select a file using a file chooser and once you submit your uploaded image, which will invoke the path `/go`, which will in turn use the `DogClassifier` instance to run the uploaded image through a couple of functions `dog_detector` and `face_detector` to determine if the image contains a dog or a person, and will run the image through the pre-trained/classifer pipeline to gather the predicted dog breed for the image.
 Using the values from `dog_detector` and `face_detector` which are True or False, the module will render either the `go.html` template, in case a dog or a person was found or the `error.html` template in case none were found.
+
 When a person was identified, the app will acknowledge and let them know that the image contains features of a given breed.  For dog breeds it will give it's prediction.  In both cases, besides showing the certainty of the prediction, it will also show sample images of that dog breed so the user can compare the results and understand why that prediction was made.  There are cases where multiple dog breeds may look alike, and in the case of humans, there must've been a reason why that given breed was selected.
 ## 3.5. Refinement
 The first refinement done on the model was on the Classifying features section of the pipeline.  The first step of the network will always be the Global Average Pooling network, plus one or more Dense networks to generate the final classifier.   However, in the end, after multiple tests, we would tell that adding more than one layer of classifiers actually made accuracy worse than with a single layer, so I decided for a single Global Average Pooling layer, plus a Dense layer at the end.

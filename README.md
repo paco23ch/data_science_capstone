@@ -83,6 +83,7 @@ Again, we ran both the human and dog images through the algorithm to determine h
 The first attempt at actually training a network is to build a network from scratch, with a combination of dense and convolutional networks, which as demonstrated in the notebook, can take many epochs and processing time.  As can be seen on the notebook, a 3.5% precision for a from-scratch network was obtained in 8 epochs.  
 
 The architecture that was selected is a combination of Convolutional network and Max Pooling layers, which help reduce the dimensionality of the image.  Each convolutional network reduces the 'image' size by half (224->112->56->28) and at the same time it extends the depth by using each of the filters, doubling them every time (16,32,64).  At the end of the pipeline, we have a Max Pooling layer, which will further reduce the dimensionality of the image, and at the end we'll have a Dense layer, which will have 133 outputs, just as the labels for each of the dog breeds.
+```
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -106,7 +107,7 @@ Total params: 19,189
 Trainable params: 19,189
 Non-trainable params: 0
 _________________________________________________________________
-
+```
 
 This is a long process to train a network from sratch, as can be seen, we could only obtain a 10.28% accuracy on the test set after 100 epochs lasting 35 minutes.  At the beginning of the training process, the model makes continuous improvements, but as epochs progress, validation loss doesn't improve as often.   All in all, Validation loss increased from 4.8682 to 4.1385 and accuracy increased from 0.0120 to 0.1042, which suggests that training this network for multiple hours could increase it's accuracy.
 
@@ -118,6 +119,7 @@ Also, to save time, we were given a series for NPZ files which contain the featu
 Each of these networks have a different output, in some cases it's a vector of (1,1,2048) dimensions and in others (7,7,2048), so for tuning purposes we used the shape of the vectors given to save time, but in the end, the selected pre-trained network output shape had to be checked and explicitly typed into the code for it to work.
 
 Given that we want to reduce the dimensionality of the pre-trained network further, the selected architecture for the feature classifier is as follows.  This network contains a Global Pooling average layer and then a Dense Layer with 133 outputs, one for each breed.
+```
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -129,6 +131,7 @@ Total params: 272,517
 Trainable params: 272,517
 Non-trainable params: 0
 _________________________________________________________________
+```
 #### 3.2.4.  Web application
 The web application is based on code from a previous Udacity project on Disaster message classification.  It's a Flask-based application that uses Jinja to generate HTML code via templates.   
 The code is split in 3 main python files and 3 html files.   The main python file `run.py` contains the Flask skeleton and creates a `/` and `index` path to handle the first time a uses logs into the web page by loading the `master.html` template.  The `run.py`file instantiates a class contained in the `dog_recognition.py` file, that pre-loads the best model and weights obtained in the training process.

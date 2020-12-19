@@ -157,7 +157,7 @@ In order to compare models through the same parameters, I decided to keep the ep
 
 | Loss | Accuracy |
 | :-- | :--: |
-| ![](./Loss.png) | !()[./Accuracy.png] |
+| ![](./Loss.png) | ![](./Accuracy.png) |
 
 The final accuracy against the test data can be seen here:
 

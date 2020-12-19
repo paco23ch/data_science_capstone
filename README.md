@@ -160,13 +160,17 @@ In order to look at different pre-trained networks, I ran 100 epochs for each of
 | DogXceptionData | 84.6890% |
 ## 4.2. Justification
 Given that we're looking for the highest accuracy possible, and the algorithm has been validated on each epoch for the loss, and also has been tested for accuracy with the test data set and we've obtained close to 85% it looks like the right model to use.  After testing different combinations of the pre-trained networks and classifier combinations, the best performance was obtained with the Xception package.
+
 In a previous classifier I wrote, VGG19 performed well in sklearn, but in this case VGG16 and VGG19 both underperformed to the rest.  Although the performance between ResNet50, Inception and Xception are close to each other, I selected the Xception moduls which gave the highest test accuracy.
 
 # 5. Conclusion
 # 5.1. Reflection
 When I built the first flower classifier and some of the recommendation engine exercises I always wondered how would this be applied in real life, for instance I'm about to work on a project that should give users recommendations on similar web pages as they are located in.   So, for me the disaster message analysis project and this one was ver insightful on how to accomplish this in real life.
+
 It was very interesting to take a set of images, and first build very basic detectors of a person and a dog, based on existing libraries, and then work on the alternatives of a CNN.  Trying to build one from scratch could be the best way to tailor it as much as you want, however, that takes a lot of time, resources and as mentioned across the class videos, experience.  This is a combination of art and science, which takes time to master.  Given that you can use pre-trained networks should make our lifes easier, so it's very interesting to experiment with each of those alternatives to achieve the best results possible.
+
 And then connecting all the pieces together with the web application was the greatest part of all.  I was able to setup this very simple interface, which could definitely be improved, and using the model in the background to run the images through it and obtain an actual prediction.
+
 A couple of aspects that I found interesting were:
 - As I tried to play with the pre-trained network options, it was suprising that the VGG models didn't perform as well as the others.  Like I mentioned before, I used that architecture in the flower classification project and work very well, so I wonder if either the model has to be trained even more for these networks to work or maybe each architecture works best for some kinds of images.   I'm more inclined to the latter because as we used ResNet50 to identify dogs, it has been trained for other images as well, so I guess with enough time and resources any network could perform as well as the other.  Plus, there's always the classifier itself, which could also be tweaked to perform better.  Like mentioned before, combination of art and science.
 - One of the drawbacks of using CNNs for other purposes is not so much on the accuracy they can have, but rather the amount of resources and/or time it's required to trained them.  In this project training time wasn't really an issue because we had a GPU enabled workspace, but I think going forward I need to find a suitable option for myself to be able to train networks for future projects.   I did try at some point in the Nanodegress to use my local machine without a GPU and it's definitely not an ideal scenario.

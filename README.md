@@ -59,16 +59,19 @@ As can be seen in the notebook, the OpenCV library is able to correctly identify
 In order to determine if our metrics and our model will work correctly, we looked at the distribution of samples by category and plotted the actual number of samples for every every class to be included in the classifier.  This can be seen in Figures 1 and 2.
 
 ![](./SampleDistribution.png) 
-*Figure 1*
+
+Figure 1
 
 ![](./ImagesByClass.png)
-*Figure 2*
 
+Figure 2
 
 Another interesting thing to look at is the input image size to determine what needs to be done with them.  As we can see in Figure 3, we have lots of differeng image sizes all the way to 4k square pixels, so we will need to scale them to be able to use them:
 
 ![](Image_size.png)
-*Figure 3*
+
+Figure 3
+
 
 Some basic stats about the data set:
 - Faces

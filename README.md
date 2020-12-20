@@ -12,8 +12,8 @@ The input data for this project are images of different sizes.  We have dog imag
 We need to be able to take an input image and using a model identify the race with a test/validation precision of 80% at least.   The application should be able to tell if there is a person in the picture and let them know the similarity to a given dog breed and the potencial feature overlaps.   If it's a dog, it should tell the user the breed and the certainty with which the model was able to predict.
 
 In order to fulfill the above, we needed to build:
-- Human detector: A component that can detect faces in an image, for which we used the OpenCV library
-- Dog detector: A component that can quickly tell if there's a dog in the image, for which we used one of the keras libraries, such as ResNet50, that has been train in identifying a number of different images
+- Human detector: A component that can detect faces in an image, to be able to message the user that an person has been uploaded
+- Dog detector: A component that can quickly tell if there's a dog in the image to tell the user that we have seen a dog or not
 - Dog classifier: A component that can determine which specific breed a dog is, based on the input images for each of the 133 breeds.  For this component, we used one of the pretrained networks and add a classifier for the specific number of breeds we want.  This will allow us to save time in training and also to train based on our own images.  This component will require a number of epochs and tuning in order to make it have accuracy above 60% as required.
 - Application: A component that can interact with the user to receive an image and return a result.  For this, we built a Flask application that can receive files via a web page and use the models developed above to predict the image contents.
 
@@ -24,7 +24,7 @@ In order to fulfill the above, we needed to build:
 - Dog detector. Since the main purpose of this component is to know if the image contains a dog, we will use:
   - Accuracy = Number of correct images / Total images
   - We will apply this metric to both the dog and human training sets in order to determine their precision.
-- Dog classifier. This will require a couple of metrics used in the training process, as well as one in the test process:  
+- Dog classifier. This will require a couple of metrics used in the training process, as well as one in the test process.  After looking at the sample image distribution and images per class, we can see that although not perfectly balanced, this can be considered a balanced data set, so Loss and Accuracy will be enough to evaluate or model.
   - Training:
     - Loss = sum(Correct value - Predicted value)/Total values 
     - Accuracy = Number of correctly predicted images / Total Images 
@@ -44,15 +44,36 @@ We have two sets of data files: faces and dogs.
   - As for the images, by exploring them, we can see that there are all sorts of resolution, which could be an issue if we use them as-is to train our network.  We will most likely have to resize them to a standard window in order to detect features.
   - In some cases, the images do contain people with the dogs, which will possibly lead to us detecting human faces and mistakenly saying there's a person in the picture.
 
+Accuracy and loss as metrics will work nicely, given that as seen in Figures 1 and 2, the training data is balanced, although we don't have the exact same number of sample images for every dog breed, we don't see outliers.   Also, if we examine the range of samples for every category, we notice that the mean and median are both 50 and the range goes from 26 to 77, so all data lies within 2 standard devations of the mean.
+- Max: 77
+- Min: 26
+- Mean: 50.22
+- Median: 50.0
+- Standard deviation: 11.82
+
+
 In order for the algorithms to work, we will need to pre-process the input images to the right size.
 ## 2.2. Visualization
 As can be seen in the notebook, the OpenCV library is able to correctly identify the faces of an image, such as images show in each of the steps.
 
-Another interesting thing to look at is the input image size to determine what needs to be done with them.  As we can see we have lots of differeng image sizes all the way to 4k square pixels, so we will need to scale them to be able to use them:
+In order to determine if our metrics and our model will work correctly, we looked at the distribution of samples by category and plotted the actual number of samples for every every class to be included in the classifier.  This can be seen in Figures 1 and 2.
+
+![](./SampleDistribution.png) 
+
+Figure 1
+
+![](./ImagesByClass.png)
+
+Figure 2
+
+Another interesting thing to look at is the input image size to determine what needs to be done with them.  As we can see in Figure 3, we have lots of differeng image sizes all the way to 4k square pixels, so we will need to scale them to be able to use them:
 
 ![](Image_size.png)
 
-Sone basic stats about the data set:
+Figure 3
+
+
+Some basic stats about the data set:
 - Faces
   - There are 13233 total human images.
 - Dogs
@@ -113,7 +134,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-This is a long process to train a network from sratch, as can be seen, we could only obtain a 10.28% accuracy on the test set after 100 epochs lasting 35 minutes.  At the beginning of the training process, the model makes continuous improvements, but as epochs progress, validation loss doesn't improve as often.   All in all, Validation loss increased from 4.8682 to 4.1385 and accuracy increased from 0.0120 to 0.1042, which suggests that training this network for multiple hours could increase it's accuracy.
+This is a long process to train a network from sratch, as can be seen, we could only obtain a 10.28% accuracy on the test set after 100 epochs lasting 35 minutes.  At the beginning of the training process, the model makes continuous improvements, but as epochs progress, validation loss doesn't improve as often.   All in all, Validation loss decreased from 4.8682 to 4.1385 and accuracy increased from 0.0120 to 0.1042, which suggests that training this network for multiple hours could increase it's accuracy.
 
 #### 3.2.3.2. From a pre-trained model
 Instead of using a network from scratch, we will transfer learning from a pre-trained network and add a classifier at the end.  In order to shorten the training period, and reuse already trained networks, we'll build a two step network, sort of pipeline.
@@ -153,7 +174,7 @@ The other part in the pipeline is the feature identification first stage, using 
 
 # 4. Results
 ## 4.1. Model Evaluation and Validation
-In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 82% accuracy, but Xception was the highest in the end.
+In order to look at different pre-trained networks, I ran 100 epochs for each of the ones listed on the table, and the best was the Xception network, so I decided to use it as the pretrained network to get the highest possible accuracy.  ResNet50 at some training iteration even provided as high as 84.6890% accuracy, but Xception was the highest in the end.
 
 In this case, the model was trained on the train set, validated through the epochs against validation set and tested against the test set in one shot at the end.  Only dog data was used to test the model.  
 

@@ -181,10 +181,16 @@ In this case, the model was trained on the train set, validated through the epoc
 In order to compare models through the same parameters, I decided to keep the epochs at 100, but based on the Loss ans accuracy graph for the Xception network, we can see that training our Classifier is really fast, we really only need a few (<5) epochs for these networks to train:
 
 | Loss | Accuracy |
-| :-- | :--: |
-| ![](./Loss.png) | ![](./Accuracy.png) |
+| :--: | :--: |
+| ![](./Loss.png) <p>Figure 4 | ![](./Accuracy.png)<p>Figure 5 |
 
-The final accuracy against the test data can be seen here:
+In addition to the above, specifically for the Xception model, I ran a k-fold (k=10) cross-validation to understand how the model behave with different variations, and in the end, the model had an average accuracy of 84.97% (+/- 1.31%), which shows the model is robust.  The visualization of each of the results obtained for the 10 folds can be seen in Figure 6:
+
+![](./k-fold-validation.png)
+Figure 6
+
+
+The final accuracy for each of the pre-trained newtorks against the test data can be seen here:
 
 | Model | Test accuracy |
 | :-- | :--: |
@@ -193,6 +199,7 @@ The final accuracy against the test data can be seen here:
 | DogVGG19Data | 49.1627% |
 | DogInceptionV3Data | 79.0670% | 
 | DogXceptionData | 84.6890% |
+
 ## 4.2. Justification
 Given that we're looking for the highest accuracy possible, and the algorithm has been validated on each epoch for the loss, and also has been tested for accuracy with the test data set and we've obtained close to 85% it looks like the right model to use.  After testing different combinations of the pre-trained networks and classifier combinations, the best performance was obtained with the Xception package.
 
@@ -243,4 +250,6 @@ The code contained here is split basically in a working notebook, in order to tr
 ## 6.3. Web application
 In order to run locally, you just need to type `python run.py` in the app directory, and the app will load an http server, accesible on `http://localhost:3001`.   
 There may be cases where because of overlapping features, the certainty of the prediction is lower or it even predicts a different breed, but you will be able to see why the algorithm may be confusing the breed.
+## 6.4. Github repository
+The jupyter notebook for this model and the web application code can be found [here](https://github.com/paco23ch/data_science_capstone/).
 
